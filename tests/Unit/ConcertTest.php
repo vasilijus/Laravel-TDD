@@ -35,7 +35,7 @@ class ConcertTest extends TestCase
      * @test
      *
      */
-    public function can_get_formatted_start_time()
+    function can_get_formatted_start_time()
     {
         $concert = factory(Concert::class)->create([
             'date' => Carbon::parse('2016-12-01 14:12:12'),
@@ -43,5 +43,16 @@ class ConcertTest extends TestCase
 
         // Verify the time is formatted
         $this->assertEquals('2:12pm', $concert->formatted_start_time );
+    }
+
+    /** @test */
+
+    function can_get_ticket_price_in_dollars()
+    {
+        $concert = factory(Concert::class)->create([
+            'ticket_price' => 6750,
+        ]);
+
+        $this->assertEquals('67.50', $concert->ticket_price_in_dollars );
     }
 }
