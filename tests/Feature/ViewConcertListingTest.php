@@ -1,12 +1,18 @@
 <?php
 
 namespace Tests\Feature;
+use App\Concert;
+use Carbon\Carbon;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ViewConcertListingTest extends TestCase
 {
+    use DatabaseMigrations;
     /**
      * @test
      *
@@ -47,27 +53,27 @@ class ViewConcertListingTest extends TestCase
 
         // View the concert listing
 
-        $this->bisit('/concerts/' . $concert->id);
-
+        $response = $this->get('/concerts/' . $concert->id);
+//dd($response);
         // Assert
 
         // See the concert details
+            //$response->assertok();
 
+        $response->assertSee('The Red Chort');
 
-        $this->see('The Red Chort');
+        $response->assertSee('with Animosity');
 
-        $this->see('with Animosity');
+        $response->assertSee('December 13, 2019');
 
-        $this->see('December 13, 2019');
+        $response->assertSee('32.50');
 
-        $this->see('32.50');
+        $response->assertSee('The Mosh Pit');
 
-        $this->see('The Mosh Pit');
+        $response->assertSee('123 Oxford Road');
 
-        $this->see('123 Oxford Road');
+        $response->assertSee('Oxford, UK 1234');
 
-        $this->see('Oxford, UK 1234');
-
-        $this->see('for tickets call 0003');
+        $response->assertSee('for tickets call 0003');
     }
 }
