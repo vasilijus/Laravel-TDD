@@ -20,7 +20,7 @@ class ConcertTest extends TestCase
     {
         // Create a concert with a know date
 
-        $concert = factory(Concert::class)->create([
+        $concert = factory(Concert::class)->make([
             'date' => Carbon::parse('2016-12-01 8:00pm'),
         ]);
 
@@ -37,7 +37,7 @@ class ConcertTest extends TestCase
      */
     function can_get_formatted_start_time()
     {
-        $concert = factory(Concert::class)->create([
+        $concert = factory(Concert::class)->make([
             'date' => Carbon::parse('2016-12-01 14:12:12'),
         ]);
 
@@ -49,7 +49,7 @@ class ConcertTest extends TestCase
 
     function can_get_ticket_price_in_dollars()
     {
-        $concert = factory(Concert::class)->create([
+        $concert = factory(Concert::class)->make([
             'ticket_price' => 6750,
         ]);
 
