@@ -20,9 +20,9 @@ class FakePaymentGateway
 
 
 
-    public function charge()
+    public function charge($ammount, $token)
     {
-
+        $this->charges[] = $ammount;
     }
 
     public function totalCharges()
