@@ -2,7 +2,7 @@
 
 namespace App\Billing;
 
-class FakePaymentGateway 
+class FakePaymentGateway implements PaymentGateway
 {
 
     private $charges;
@@ -20,9 +20,9 @@ class FakePaymentGateway
 
 
 
-    public function charge($ammount, $token)
+    public function charge($amount, $token)
     {
-        $this->charges[] = $ammount;
+        $this->charges[] = $amount;
     }
 
     public function totalCharges()

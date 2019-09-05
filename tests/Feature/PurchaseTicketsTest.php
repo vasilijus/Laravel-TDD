@@ -2,6 +2,8 @@
 
 use App\Concert;
 use Tests\TestCase;
+
+use App\Billing\PaymentGateway;
 use App\Billing\FakePaymentGateway;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,6 +22,10 @@ class ViewConcertListingTest extends TestCase
     public function customer_can_purchase_concert_tickets()
     {
         $paymentGateway = new FakePaymentGateway;
+        
+        $this->app->instance(PaymentGateway::class, $paymentGateway);
+        //dd($paymentGateway);
+        
         // Arrange
 
         //Create a concert
@@ -36,14 +42,16 @@ class ViewConcertListingTest extends TestCase
             'payment_token' => $paymentGateway->getValidTestToken(),
         ] );
 
+        $response->assertStatus(201);
+
 
         $this->assertEquals( 9750 , $paymentGateway->totalCharges() );
 
-        $order = $concert->orders()->where('email',)->first();
+        $order = $concert->orders()->where('email')->first();
 
         $this->$this->assertNotNull($order);
 
-        $this->assertEquals( 3, $order->tickets->count() );
+        $this->assertEquals( 3, $order->tickets()->count() );
     }
 
 
